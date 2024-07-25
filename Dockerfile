@@ -7,8 +7,8 @@ RUN \
     microdnf clean all
 
 COPY \
-    trex \
-    /usr/local/bin/
+    * \
+    /usr/local/bin/trex
 
 EXPOSE 8000
 
