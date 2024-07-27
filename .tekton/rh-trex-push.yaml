@@ -10,7 +10,7 @@ metadata:
       == "main"
   creationTimestamp: null
   labels:
-    appstudio.openshift.io/application: sample
+    appstudio.openshift.io/application: rh-trex
     appstudio.openshift.io/component: rh-trex
     pipelines.appstudio.openshift.io/type: build
   name: rh-trex-on-push
@@ -22,7 +22,7 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/redhat-user-workloads/kurwang-tenant/sample/rh-trex:{{revision}}
+    value: quay.io/redhat-user-workloads/kurwang-tenant/rh-trex/rh-trex:{{revision}}
   - name: dockerfile
     value: Dockerfile
   pipelineSpec:
