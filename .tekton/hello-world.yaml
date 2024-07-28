@@ -1,36 +1,20 @@
-kind: Pipeline
 apiVersion: tekton.dev/v1beta1
+kind: Pipeline
 metadata:
-  name: example-pipeline
+  name: hello-goodbye
 spec:
   params:
-    - description: 'Snapshot of the application'
-      name: SNAPSHOT
-      default: '{"components": [{"name":"test-app", "containerImage": "quay.io/example/repo:latest"}]}'
-      type: string
-    - description: 'Namespace where the application is running'
-      name: NAMESPACE
-      default: "default"
-      type: string
-    - description: 'Expected output'
-      name: EXPECTED_OUTPUT
-      default: "Hello World!"
-      type: string
+  - name: username
+    type: string
   tasks:
-    - name: task-1
-      description: Placeholder task that prints the Snapshot and outputs standard TEST_OUTPUT
+    - name: hello
+      taskRef:
+        name: hello
+    - name: goodbye
+      runAfter:
+        - hello
+      taskRef:
+        name: goodbye
       params:
-        - name: SNAPSHOT
-          value: $(params.SNAPSHOT)
-      taskSpec:
-        params:
-        - name: SNAPSHOT
-        steps:
-        - image: registry.redhat.io/openshift4/ose-cli:latest
-          env:
-          - name: SNAPSHOT
-            value: $(params.SNAPSHOT)
-          script: |
-            #!/bin/bash
-            dnf -y install jq
-            echo -e "Example test task for the Snapshot:\n ${SNAPSHOT}"
+      - name: username
+        value: $(params.username)
