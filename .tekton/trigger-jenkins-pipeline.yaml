@@ -1,0 +1,39 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: trigger-jenkins-pipeline
+spec:
+  params:
+    - name: JENKINS_HOST_URL
+      type: string
+      description: Server URL on which Jenkins is running
+    - name: JOB_NAME
+      type: string
+      description: Jenkins Job which needs to be triggered
+    - name: JENKINS_SECRETS
+      type: string
+      description: Jenkins secret containing credentials
+      default: jenkins-credentials
+    - name: JOB_PARAMS
+      type: array
+      description: Extra arguments to append as a part of CURL request
+      default: [""]
+  workspaces:
+    - name: source
+      description: Workspace for storing files to be sent via CURL request
+  tasks:
+    - name: trigger-jenkins-job
+      taskRef:
+        name: trigger-jenkins-job
+      params:
+        - name: JENKINS_HOST_URL
+          value: $(params.JENKINS_HOST_URL)
+        - name: JOB_NAME
+          value: $(params.JOB_NAME)
+        - name: JENKINS_SECRETS
+          value: $(params.JENKINS_SECRETS)
+        - name: JOB_PARAMS
+          value: $(params.JOB_PARAMS)
+      workspaces:
+        - name: source
+          workspace: source
