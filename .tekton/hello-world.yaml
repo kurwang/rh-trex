@@ -34,4 +34,10 @@ spec:
           - name: SNAPSHOT
             value: $(params.SNAPSHOT)
           script: |
+            dnf -y install jq
             echo -e "Example test task for the Snapshot:\n ${SNAPSHOT}"
+            RESULT="SUCCESS"
+
+            TEST_OUTPUT=$(jq -rc --arg date $(date -u --iso-8601=seconds) --arg RESULT "${RESULT}" --null-input \
+              '{result: $RESULT, timestamp: $date, failures: 0, successes: 1, warnings: 0}')
+            echo -n "${TEST_OUTPUT}" | tee $(results.TEST_OUTPUT.path)
