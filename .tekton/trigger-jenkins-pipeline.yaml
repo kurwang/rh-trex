@@ -33,7 +33,7 @@ spec:
         - name: JENKINS_SECRETS
           value: $(params.JENKINS_SECRETS)
         - name: JOB_PARAMS
-          value: $(params.JOB_PARAMS)
+          value: ["$(params.JOB_PARAMS[*])"]
       workspaces:
         - name: source
           workspace: source
