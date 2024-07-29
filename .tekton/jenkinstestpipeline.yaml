@@ -19,7 +19,7 @@ spec:
       description: Extra arguments to append as a part of CURL request
       default: [""]
   workspaces:
-    - name: source
+    - name: workspace
       description: Workspace for storing files to be sent via CURL request
   tasks:
     - name: trigger-jenkins-job
@@ -28,7 +28,7 @@ spec:
           The following task can be used to trigger a Jenkins job using
           CURL request from a Tekton Task.
         workspaces:
-          - name: source
+          - name: workspace
             description: >-
               The workspace which can be used to mount files which can be
               send via CURL request to Jenkins job.
@@ -50,7 +50,7 @@ spec:
         steps:
           - name: trigger-pipeline
             image: registry.access.redhat.com/ubi8/ubi:8.2
-            workingDir: $(workspaces.source.path)
+            workingDir: $(workspaces.workspace.path)
             args:
               - $(params.JOB_PARAMS)
             script: |
@@ -142,5 +142,5 @@ spec:
         - name: JOB_PARAMS
           value: ["$(params.JOB_PARAMS[*])"]
       workspaces:
-        - name: source
-          workspace: source
+        - name: workspace
+          workspace: workspace
