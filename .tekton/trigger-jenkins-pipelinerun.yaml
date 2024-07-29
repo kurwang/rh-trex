@@ -16,4 +16,3 @@ spec:
       value: ["$(params.JOB_PARAMS[*])"]
   workspaces:
     - name: source
-      emptyDir: {}
