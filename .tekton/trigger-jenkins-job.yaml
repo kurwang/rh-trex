@@ -13,6 +13,11 @@ spec:
   description: >-
     The following task can be used to trigger a Jenkins job using
     CURL request from a Tekton Task.
+  workspaces:
+    - name: source
+      description: >-
+        The workspace which can be used to mount files which can be
+        send via CURL request to Jenkins job.
   params:
     - name: JENKINS_HOST_URL
       type: string
