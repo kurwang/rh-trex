@@ -19,7 +19,7 @@ spec:
       description: Extra arguments to append as a part of CURL request
       default: [""]
   workspaces:
-    - name: source
+    - name: workspace
       description: Workspace for storing files to be sent via CURL request
   tasks:
     - name: trigger-jenkins-job
@@ -34,6 +34,3 @@ spec:
           value: $(params.JENKINS_SECRETS)
         - name: JOB_PARAMS
           value: ["$(params.JOB_PARAMS[*])"]
-      workspaces:
-        - name: source
-          workspace: source

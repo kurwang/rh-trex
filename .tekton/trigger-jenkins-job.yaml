@@ -14,7 +14,7 @@ spec:
     The following task can be used to trigger a Jenkins job using
     CURL request from a Tekton Task.
   workspaces:
-    - name: source
+    - name: workspace
       description: >-
         The workspace which can be used to mount files which can be
         send via CURL request to Jenkins job.
@@ -36,7 +36,7 @@ spec:
   steps:
     - name: trigger-pipeline
       image: registry.access.redhat.com/ubi8/ubi:8.2
-      workingDir: $(workspaces.source.path)
+      workingDir: $(workspaces.workspace.path)
       args:
         - $(params.JOB_PARAMS)
       script: |
