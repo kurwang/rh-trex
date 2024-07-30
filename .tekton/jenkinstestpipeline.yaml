@@ -42,7 +42,6 @@ spec:
         steps:
           - name: trigger-pipeline
             image: registry.access.redhat.com/ubi8/ubi:8.2
-            workingDir: $(workspaces.workspace.path)
             args:
               - $(params.JOB_PARAMS)
             script: |
@@ -124,15 +123,3 @@ spec:
                   secretKeyRef:
                     name: $(params.JENKINS_SECRETS)
                     key: crumb
-      params:
-        - name: JENKINS_HOST_URL
-          value: $(params.JENKINS_HOST_URL)
-        - name: JOB_NAME
-          value: $(params.JOB_NAME)
-        - name: JENKINS_SECRETS
-          value: $(params.JENKINS_SECRETS)
-        - name: JOB_PARAMS
-          value: ["$(params.JOB_PARAMS[*])"]
-      workspaces:
-        - name: workspace
-          workspace: workspace
