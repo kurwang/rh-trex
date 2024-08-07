@@ -6,40 +6,38 @@ spec:
   params:
     - name: JENKINS_HOST_URL
       type: string
-      description: Server URL on which Jenkins is running
       default: ""
     - name: JOB_NAME
       type: string
-      description: Jenkins Job which needs to be triggered
       default: ""
     - name: JENKINS_SECRETS
       type: string
-      description: Jenkins secret containing credentials
       default: ""
     - name: JOB_PARAMS
       type: array
-      description: Extra arguments to append as a part of CURL request
       default: [""]
   tasks:
     - name: trigger-jenkins-job
+      params:
+        - name: JENKINS_HOST_URL
+          value: $(params.JENKINS_HOST_URL)
+        - name: JOB_NAME
+          value: $(params.JOB_NAME)
+        - name: JENKINS_SECRETS
+          value: $(params.JENKINS_SECRETS)
+        - name: JOB_PARAMS
+          value: $(params.JOB_PARAMS[*])
       taskSpec:
-        description: >-
-          The following task can be used to trigger a Jenkins job using
-          CURL request from a Tekton Task.
         params:
           - name: JENKINS_HOST_URL
             type: string
-            description: Server URL on which Jenkins is running
           - name: JOB_NAME
             type: string
-            description: Jenkins Job which needs to be triggered
           - name: JENKINS_SECRETS
             type: string
-            description: Jenkins secret containing credentials
             default: jenkins-credentials
           - name: JOB_PARAMS
             type: array
-            description: Extra arguments to append as a part of CURL request
             default: [""]
         steps:
           - name: trigger-pipeline
